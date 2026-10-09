@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інтернет-Детективи: Браузери та Пошуковики</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font (Nunito for friendly round aesthetic) -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#3B82F6',
+                            purple: '#8B5CF6',
+                            green: '#10B981',
+                            yellow: '#F59E0B',
+                            pink: '#EC4899',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Keyframe Animations */
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-bounce-subtle {
+            animation: bounce-subtle 2s infinite ease-in-out;
+        }
+        @keyframes pulse-star {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2) rotate(10deg); }
+        }
+        .animate-star {
+            animation: pulse-star 1.5s infinite ease-in-out;
+        }
+        /* Confetti Canvas CSS */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F3F4F6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C084FC;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col justify-between selection:bg-purple-200">
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Header Navigation -->
+    <header class="bg-white border-b-4 border-purple-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-tr from-purple-500 to-pink-500 text-white p-3 rounded-2xl shadow-md transform rotate-[-3deg]">
+                    <i class="fa-solid me-0 fa-compass text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-black text-purple-900 tracking-tight leading-none">
+                        Інтернет-Детективи 🔍
+                    </h1>
+                    <p class="text-xs text-purple-600 font-bold mt-1">Твій інтерактивний путівник мережею</p>
+                </div>
+            </div>
+
+            <!-- Fast Nav Buttons -->
+            <nav class="flex flex-wrap gap-2 text-sm font-bold">
+                <button onclick="scrollToSection('theory')" class="px-3 py-1.5 rounded-xl bg-purple-50 text-purple-700 hover:bg-purple-100 transition">
+                    🚗 Машина чи 🔍 Навігатор?
+                </button>
+                <button onclick="scrollToSection('game')" class="px-3 py-1.5 rounded-xl bg-yellow-50 text-yellow-700 hover:bg-yellow-100 transition">
+                    🎮 Гра-Сортування
+                </button>
+                <button onclick="scrollToSection('simulators')" class="px-3 py-1.5 rounded-xl bg-blue-50 text-blue-700 hover:bg-blue-100 transition">
+                    🛠️ Практика & Налаштування
+                </button>
+                <button onclick="scrollToSection('quiz')" class="px-3 py-1.5 rounded-xl bg-green-50 text-green-700 hover:bg-green-100 transition">
+                    🏆 Перевірка знань
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-12 w-full">
+
+        <!-- SECTION 1: Metaphor Theory -->
+        <section id="theory" class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-2 border-purple-100 relative overflow-hidden">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="inline-block bg-purple-100 text-purple-800 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full mb-2">Урок 1</span>
+                <h2 class="text-3xl font-black text-slate-900">У чому різниця? Проста аналогія</h2>
+                <p class="text-slate-600 text-base mt-2">Уяви, що ти збираєшся у віртуальну подорож. Ось хто тобі допомагає:</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Browser Metaphor -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl p-6 relative flex flex-col justify-between hover:shadow-lg transition">
+                    <div class="absolute -top-4 right-4 bg-blue-500 text-white text-xs font-extrabold px-3 py-1 rounded-full shadow">
+                        ПРОГРАМА
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-4xl">🚗</span>
+                            <div>
+                                <h3 class="text-2xl font-extrabold text-blue-900">БРАУЗЕР</h3>
+                                <p class="text-xs text-blue-700 font-bold">Це твоя Машина для поїздок</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-700 leading-relaxed text-sm mb-4">
+                            Це програма на комп'ютері чи телефоні, яку ти відкриваєш першою. Вона "возить" тебе від одного сайту до іншого. Без неї ти не потрапиш в інтернет!
+                        </p>
+                        <div class="bg-white rounded-xl p-3 border border-blue-100">
+                            <p class="text-xs font-black text-slate-500 uppercase mb-2">Безпечні та популярні браузери:</p>
+                            <div class="flex flex-wrap gap-2 text-xs font-bold">
+                                <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border flex items-center gap-1"><i class="fa-brands fa-chrome text-red-500"></i> Chrome</span>
+                                <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border flex items-center gap-1"><i class="fa-brands fa-firefox-browser text-orange-500"></i> Firefox</span>
+                                <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border flex items-center gap-1"><i class="fa-brands fa-edge text-blue-600"></i> Edge</span>
+                                <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border flex items-center gap-1"><i class="fa-brands fa-safari text-sky-500"></i> Safari</span>
+                                <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border flex items-center gap-1"><i class="fa-brands fa-opera text-red-600"></i> Opera</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Engine Metaphor -->
+                <div class="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-2xl p-6 relative flex flex-col justify-between hover:shadow-lg transition">
+                    <div class="absolute -top-4 right-4 bg-amber-500 text-white text-xs font-extrabold px-3 py-1 rounded-full shadow">
+                        САЙТ / СЛУЖБА
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-4xl">🔍</span>
+                            <div>
+                                <h3 class="text-2xl font-extrabold text-amber-900">ПОШУКОВА СИСТЕМА</h3>
+                                <p class="text-xs text-amber-700 font-bold">Це твій Навігатор чи Бібліотекар</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-700 leading-relaxed text-sm mb-4">
+                            Це спеціальний сайт *всередині* браузера. Ти запитуєш його "де знайти фото котика?", і він миттєво підказує найкращі адреси та сторінки.
+                        </p>
+                        <div class="bg-white rounded-xl p-3 border border-amber-100">
+                            <p class="text-xs font-black text-slate-500 uppercase mb-2">Надійні пошуковики:</p>
+                            <div class="flex flex-wrap gap-2 text-xs font-bold">
+                                <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border flex items-center gap-1"><i class="fa-brands fa-google text-blue-500"></i> Google</span>
+                                <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border flex items-center gap-1"><i class="fa-solid fa-magnifying-glass text-sky-600"></i> Bing</span>
+                                <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border flex items-center gap-1"><i class="fa-solid fa-shield-halved text-green-600"></i> DuckDuckGo</span>
+                                <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg border flex items-center gap-1"><i class="fa-brands fa-yahoo text-purple-600"></i> Yahoo!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Sorting Game -->
+        <section id="game" class="bg-gradient-to-br from-purple-900 to-indigo-900 text-white rounded-3xl p-6 md:p-8 shadow-2xl relative">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 border-b border-purple-700/50 pb-4">
+                <div>
+                    <span class="bg-yellow-400 text-slate-900 text-xs font-black px-3 py-1 rounded-full uppercase">Інтерактивна гра</span>
+                    <h2 class="text-3xl font-black mt-1">Гра: Розподіли за категоріями! 🎮</h2>
+                    <p class="text-purple-200 text-sm">Натискай на картки елементів, щоб відправити їх у правильний кошик.</p>
+                </div>
+                <div class="flex items-center gap-4 bg-purple-800/80 px-4 py-2 rounded-2xl border border-purple-600">
+                    <div class="text-center">
+                        <span class="text-xs text-purple-300 block font-bold">Очки</span>
+                        <span id="game-score" class="text-2xl font-black text-yellow-300">0 / 8</span>
+                    </div>
+                    <button onclick="resetSortGame()" class="px-3 py-1.5 bg-purple-700 hover:bg-purple-600 rounded-xl text-xs font-bold transition">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Спочатку
+                    </button>
+                </div>
+            </div>
+
+            <!-- Game Arena -->
+            <div id="game-container" class="space-y-6">
+                <!-- Drop Target Zone -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Browser Box -->
+                    <div id="box-browser" class="bg-purple-800/40 border-3 border-dashed border-blue-400 rounded-2xl p-5 min-h-[160px] flex flex-col justify-between transition">
+                        <div class="flex items-center justify-between mb-3 border-b border-blue-400/30 pb-2">
+                            <span class="font-black text-blue-300 flex items-center gap-2 text-lg">
+                                🚗 Браузер (Машина)
+                            </span>
+                            <span id="browser-count" class="text-xs bg-blue-900/60 px-2 py-1 rounded-lg text-blue-200 font-bold">0 розпізнано</span>
+                        </div>
+                        <div id="browser-items" class="flex flex-wrap gap-2 min-h-[60px] items-center">
+                            <span class="text-purple-300/50 text-xs italic">Тут будуть браузери...</span>
+                        </div>
+                    </div>
+
+                    <!-- Search Engine Box -->
+                    <div id="box-search" class="bg-purple-800/40 border-3 border-dashed border-amber-400 rounded-2xl p-5 min-h-[160px] flex flex-col justify-between transition">
+                        <div class="flex items-center justify-between mb-3 border-b border-amber-400/30 pb-2">
+                            <span class="font-black text-amber-300 flex items-center gap-2 text-lg">
+                                🔍 Пошукова система (Навігатор)
+                            </span>
+                            <span id="search-count" class="text-xs bg-amber-900/60 px-2 py-1 rounded-lg text-amber-200 font-bold">0 розпізнано</span>
+                        </div>
+                        <div id="search-items" class="flex flex-wrap gap-2 min-h-[60px] items-center">
+                            <span class="text-purple-300/50 text-xs italic">Тут будуть пошуковики...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cards Pool -->
+                <div class="bg-purple-950/60 p-4 rounded-2xl border border-purple-700/50">
+                    <p class="text-xs font-bold text-purple-300 mb-3 uppercase tracking-wider">Натисни на картку та вибери, куди її відправити:</p>
+                    <div id="cards-pool" class="flex flex-wrap gap-3 justify-center">
+                        <!-- Populated dynamically by JS -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="game-complete-banner" class="hidden bg-emerald-500 text-slate-900 font-extrabold text-center p-4 rounded-2xl mt-4 animate-bounce-subtle">
+                🎉 Чудова робота, Детективе! Ти безпомилково розрізняєш Браузери та Пошуковці!
+            </div>
+        </section>
+
+        <!-- SECTION 3: Practical Skills Simulators -->
+        <section id="simulators" class="space-y-8">
+            <div class="text-center max-w-2xl mx-auto">
+                <span class="bg-blue-100 text-blue-800 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full">Урок 2</span>
+                <h2 class="text-3xl font-black text-slate-900 mt-2">Практичні навички в браузері 🛠️</h2>
+                <p class="text-slate-600 text-sm mt-1">Спробуй виконати налаштування у віртуальних симуляторах нижче.</p>
+            </div>
+
+            <!-- SIMULATOR 1: Bookmarks -->
+            <div class="bg-white rounded-3xl p-6 border-2 border-slate-100 shadow-md">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="bg-yellow-100 text-yellow-600 p-2.5 rounded-xl font-black">
+                        ⭐
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-extrabold">1. Створення закладок (Bookmarks)</h3>
+                        <p class="text-xs text-slate-500">Зберігай улюблені сайти, щоб не шукати їх щоразу заново (Гарячі клавіші: <kbd class="bg-slate-100 border px-1.5 py-0.5 rounded text-xs">Ctrl + D</kbd>)</p>
+                    </div>
+                </div>
+
+                <!-- Interactive Chrome-like Mock Window -->
+                <div class="bg-slate-800 rounded-2xl overflow-hidden shadow-inner text-slate-100 border border-slate-700">
+                    <!-- Browser Bar Header -->
+                    <div class="bg-slate-900 px-4 py-2 flex items-center gap-2 border-b border-slate-700">
+                        <div class="flex gap-1.5">
+                            <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
+                        </div>
+                        <!-- URL Bar -->
+                        <div class="flex-1 bg-slate-800 rounded-lg px-3 py-1.5 flex items-center justify-between text-xs text-slate-300">
+                            <span class="flex items-center gap-2">
+                                <i class="fa-solid fa-lock text-green-400 text-xs"></i>
+                                https://cikave-navchannya.ua
+                            </span>
+                            <!-- Interactive Star Icon -->
+                            <button id="star-btn" onclick="toggleBookmarkSim()" class="text-slate-400 hover:text-yellow-400 transition p-1 text-base focus:outline-none" title="Додати в закладки">
+                                <i id="star-icon" class="fa-regular fa-star"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Bookmark Popup Box (Dynamic) -->
+                    <div id="bookmark-popup" class="hidden bg-slate-700 p-4 border-b border-slate-600 text-xs space-y-3 animate-fade-in">
+                        <div class="flex justify-between items-center text-yellow-300 font-bold">
+                            <span>⭐ Закладку додано!</span>
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-slate-400 text-[10px] mb-1">Назва сайту:</label>
+                                <input type="text" value="Цікаве Навчання" class="w-full bg-slate-800 border border-slate-600 rounded px-2 py-1 text-white text-xs" readonly>
+                            </div>
+                            <div>
+                                <label class="block text-slate-400 text-[10px] mb-1">Папка:</label>
+                                <select class="w-full bg-slate-800 border border-slate-600 rounded px-2 py-1 text-white text-xs">
+                                    <option>Панель закладок</option>
+                                    <option>Школа / Навчання</option>
+                                    <option>Ігри та розваги</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="saveBookmarkSim()" class="w-full bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-black py-1.5 rounded transition">
+                            Готово
+                        </button>
+                    </div>
+
+                    <!-- Bookmark Bar -->
+                    <div class="bg-slate-800/80 px-4 py-1.5 border-b border-slate-700/50 flex items-center gap-3 text-xs text-slate-300">
+                        <span class="text-slate-500 text-[10px] uppercase font-bold">Панель:</span>
+                        <span id="bm-item-1" class="hidden bg-slate-700 text-yellow-300 px-2 py-0.5 rounded flex items-center gap-1 font-semibold text-[11px]">
+                            ⭐ Цікаве Навчання
+                        </span>
+                        <span class="bg-slate-700/50 px-2 py-0.5 rounded text-[11px] text-slate-400">🌐 Вікіпедія</span>
+                        <span class="bg-slate-700/50 px-2 py-0.5 rounded text-[11px] text-slate-400">🎮 Навчальні Ігри</span>
+                    </div>
+
+                    <!-- Page Body Content Mock -->
+                    <div class="p-6 text-center text-slate-400 min-h-[120px] flex flex-col justify-center items-center">
+                        <p class="text-sm font-bold text-slate-200">Натисни на зірочку ⭐ у верхньому правому кутку адресної строки!</p>
+                        <p id="bm-instruction" class="text-xs text-amber-400 mt-2 font-semibold">Крок 1: Клацни зірочку ⭐</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMULATOR 2 & 3: Language & Downloads Settings -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Language Settings Sim -->
+                <div class="bg-white rounded-3xl p-6 border-2 border-slate-100 shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-purple-100 text-purple-600 p-2.5 rounded-xl font-black">
+                                🌐
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-extrabold">2. Зміна мови меню</h3>
+                                <p class="text-xs text-slate-500">Як встановити Українську мову інтерфейсу</p>
+                            </div>
+                        </div>
+
+                        <!-- Mini Step Guided Interactive -->
+                        <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-3">
+                            <div class="flex justify-between items-center border-b pb-2">
+                                <span class="text-xs font-bold text-slate-600">Налаштування браузера</span>
+                                <span class="text-xs text-purple-600 font-extrabold" id="lang-step-indicator">Крок 1 з 3</span>
+                            </div>
+
+                            <div id="lang-step-1" class="space-y-2">
+                                <p class="text-xs font-semibold">1. Де знаходяться налаштування?</p>
+                                <button onclick="nextLangStep(2)" class="w-full bg-white hover:bg-purple-50 border-2 border-purple-200 text-purple-900 font-bold p-2 rounded-xl text-xs flex items-center justify-between text-left transition">
+                                    <span>Натиснути 3 крапки <strong class="text-lg leading-none">⋮</strong> у правому кутку</span>
+                                    <i class="fa-solid fa-arrow-right text-purple-500"></i>
+                                </button>
+                            </div>
+
+                            <div id="lang-step-2" class="hidden space-y-2">
+                                <p class="text-xs font-semibold">2. Обираємо розділ мов:</p>
+                                <button onclick="nextLangStep(3)" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold p-2 rounded-xl text-xs flex items-center justify-between text-left transition">
+                                    <span>🌐 Перейти в Мови (Languages) -> Додати Українську</span>
+                                    <i class="fa-solid fa-check"></i>
+                                </button>
+                            </div>
+
+                            <div id="lang-step-3" class="hidden space-y-2">
+                                <p class="text-xs font-semibold">3. Активація мови:</p>
+                                <div class="bg-emerald-100 border border-emerald-300 text-emerald-900 p-3 rounded-xl text-xs font-bold space-y-2">
+                                    <p>✅ Поставити прапорець "Відображати браузер цією мовою" та перезапустити!</p>
+                                    <button onclick="resetLangStep()" class="text-xs bg-emerald-700 text-white px-2.5 py-1 rounded-lg">Спробувати ще раз</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Download Folder Location Settings Sim -->
+                <div class="bg-white rounded-3xl p-6 border-2 border-slate-100 shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="bg-emerald-100 text-emerald-600 p-2.5 rounded-xl font-black">
+                                📁
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-extrabold">3. Місце збереження файлів</h3>
+                                <p class="text-xs text-slate-500">Як обирати папку для малюнків та файлів</p>
+                            </div>
+                        </div>
+
+                        <!-- Toggle Switch Simulator -->
+                        <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-4">
+                            <div class="flex items-center justify-between p-3 bg-white rounded-xl border">
+                                <div>
+                                    <p class="text-xs font-extrabold text-slate-800">Запитувати, куди зберігати кожен файл</p>
+                                    <p class="text-[10px] text-slate-500">Ask where to save each file before downloading</p>
+                                </div>
+                                <!-- Toggle Button -->
+                                <button id="dl-toggle-btn" onclick="toggleDownloadSetting()" class="w-12 h-6 bg-slate-300 rounded-full p-1 transition-colors duration-200 ease-in-out focus:outline-none">
+                                    <div id="dl-toggle-circle" class="w-4 h-4 bg-white rounded-full shadow-md transform transition-transform duration-200 ease-in-out"></div>
+                                </button>
+                            </div>
+
+                            <div id="dl-status-box" class="text-xs p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-medium">
+                                ⚠️ Зараз усі файли автоматично потрапляють у завалена папку "Downloads" без запиту.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 4: Quiz & Certification -->
+        <section id="quiz" class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-2 border-green-100">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="bg-green-100 text-green-800 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full">Фінал</span>
+                <h2 class="text-3xl font-black text-slate-900 mt-2">Перевірка знань Детектива 🏆</h2>
+                <p class="text-slate-600 text-sm mt-1">Дай відповіді на 4 питання та отримай іменний бейдж!</p>
+            </div>
+
+            <!-- Quiz Questions Container -->
+            <div id="quiz-container" class="max-w-2xl mx-auto space-y-6">
+                <!-- Q1 -->
+                <div class="quiz-card bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                    <p class="font-extrabold text-base text-slate-800 mb-3">1. Що таке Google Chrome, Firefox та Microsoft Edge?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-bold">
+                        <button onclick="checkAnswer(this, false, 'q1')" class="quiz-opt p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-purple-300 transition">A) Пошукові системи</button>
+                        <button onclick="checkAnswer(this, true, 'q1')" class="quiz-opt p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-purple-300 transition">Б) Браузери ("Машини")</button>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="quiz-card bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                    <p class="font-extrabold text-base text-slate-800 mb-3">2. Твій друг хоче знайти схему як зліпити динозавра. Який сайт йому допоможе шукати?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-bold">
+                        <button onclick="checkAnswer(this, true, 'q2')" class="quiz-opt p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-purple-300 transition">A) Пошукова система (Google, DuckDuckGo)</button>
+                        <button onclick="checkAnswer(this, false, 'q2')" class="quiz-opt p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-purple-300 transition">Б) Папка "Завантаження"</button>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="quiz-card bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                    <p class="font-extrabold text-base text-slate-800 mb-3">3. Яка кнопка в браузері швидко зберігає сайт у Закладки?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-bold">
+                        <button onclick="checkAnswer(this, true, 'q3')" class="quiz-opt p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-purple-300 transition">A) Зірочка ⭐ (Ctrl + D)</button>
+                        <button onclick="checkAnswer(this, false, 'q3')" class="quiz-opt p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-purple-300 transition">Б) Хрестик ❌</button>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="quiz-card bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                    <p class="font-extrabold text-base text-slate-800 mb-3">4. Що потрібно увімкнути, щоб браузер кожного разу питав, куди зберегти новий файл?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-bold">
+                        <button onclick="checkAnswer(this, false, 'q4')" class="quiz-opt p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-purple-300 transition">A) Вимкнути інтернет</button>
+                        <button onclick="checkAnswer(this, true, 'q4')" class="quiz-opt p-3 bg-white border border-slate-200 rounded-xl text-left hover:border-purple-300 transition">Б) Тумблер "Запитувати, куди зберігати кожен файл"</button>
+                    </div>
+                </div>
+
+                <div class="text-center pt-2">
+                    <button id="finish-quiz-btn" onclick="finishQuiz()" class="px-8 py-3 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-black text-base rounded-2xl shadow-lg transition transform hover:scale-105">
+                        Перевірити результати 🚀
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Badge Outcome (Hidden by default) -->
+            <div id="quiz-result" class="hidden max-w-md mx-auto text-center p-6 bg-gradient-to-b from-yellow-50 to-amber-50 border-4 border-yellow-300 rounded-3xl shadow-xl animate-star space-y-4">
+                <div class="text-5xl">🌟</div>
+                <h3 class="text-2xl font-black text-amber-900">Вітаємо!</h3>
+                <p id="quiz-score-text" class="text-sm font-bold text-amber-800"></p>
+                <div class="bg-white p-4 rounded-2xl border border-yellow-200 shadow-sm">
+                    <p class="text-xs uppercase font-black text-slate-400">Твій новий титул:</p>
+                    <p class="text-lg font-black text-purple-700 mt-1">Майстер Інтернету 🎉</p>
+                </div>
+                <button onclick="location.reload()" class="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-black rounded-xl text-xs transition">
+                    Пройти знову
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-12">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-2">
+            <p class="font-bold text-slate-300">Навчальний проект «Інтернет-Детективи» 🚀</p>
+            <p>Безпечне та свідоме користування інтернетом для дітей.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth Navigation Scroll
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        /* --- SECTION 2: SORTING GAME LOGIC --- */
+        const sortData = [
+            { id: 1, name: 'Google Chrome', type: 'browser', icon: 'fa-brands fa-chrome text-red-500' },
+            { id: 2, name: 'Google Search', type: 'search', icon: 'fa-brands fa-google text-blue-500' },
+            { id: 3, name: 'Mozilla Firefox', type: 'browser', icon: 'fa-brands fa-firefox-browser text-orange-500' },
+            { id: 4, name: 'DuckDuckGo', type: 'search', icon: 'fa-solid fa-shield-halved text-green-500' },
+            { id: 5, name: 'Microsoft Edge', type: 'browser', icon: 'fa-brands fa-edge text-blue-500' },
+            { id: 6, name: 'Bing', type: 'search', icon: 'fa-solid fa-magnifying-glass text-sky-500' },
+            { id: 7, name: 'Safari', type: 'browser', icon: 'fa-brands fa-safari text-sky-400' },
+            { id: 8, name: 'Yahoo!', type: 'search', icon: 'fa-brands fa-yahoo text-purple-400' },
+        ];
+
+        let currentScore = 0;
+        let activeCard = null;
+
+        function initSortGame() {
+            currentScore = 0;
+            updateScoreDisplay();
+            document.getElementById('browser-items').innerHTML = '<span class="text-purple-300/50 text-xs italic">Тут будуть браузери...</span>';
+            document.getElementById('search-items').innerHTML = '<span class="text-purple-300/50 text-xs italic">Тут будуть пошуковики...</span>';
+            document.getElementById('game-complete-banner').classList.add('hidden');
+
+            const pool = document.getElementById('cards-pool');
+            pool.innerHTML = '';
+
+            // Shuffle cards
+            const shuffled = [...sortData].sort(() => Math.random() - 0.5);
+
+            shuffled.forEach(item => {
+                const card = document.createElement('div');
+                card.id = `card-${item.id}`;
+                card.className = 'bg-white text-slate-800 px-3 py-2 rounded-xl text-xs font-bold shadow-md cursor-pointer border-2 border-transparent hover:border-yellow-400 flex items-center gap-2 transition transform hover:scale-105';
+                card.innerHTML = `<i class="${item.icon} text-sm"></i> ${item.name}`;
+                card.onclick = () => selectCard(item);
+                pool.appendChild(card);
+            });
+        }
+
+        function selectCard(item) {
+            // Quick choice popup / modal simulation
+            const targetType = prompt(`Куди відправити "${item.name}"?\n1 - Браузер (Машина)\n2 - Пошукова система (Навігатор)`);
+            if (targetType === '1') {
+                verifyCardPlacement(item, 'browser');
+            } else if (targetType === '2') {
+                verifyCardPlacement(item, 'search');
+            }
+        }
+
+        function verifyCardPlacement(item, target) {
+            if (item.type === target) {
+                // Correct!
+                currentScore++;
+                const cardEl = document.getElementById(`card-${item.id}`);
+                if (cardEl) cardEl.remove();
+
+                const targetBox = target === 'browser' ? document.getElementById('browser-items') : document.getElementById('search-items');
+                if (targetBox.querySelector('span.italic')) {
+                    targetBox.innerHTML = '';
+                }
+
+                const placedTag = document.createElement('span');
+                placedTag.className = 'bg-white/20 text-white px-2.5 py-1 rounded-lg text-xs font-bold border border-white/30 flex items-center gap-1 animate-fade-in';
+                placedTag.innerHTML = `<i class="${item.icon}"></i> ${item.name}`;
+                targetBox.appendChild(placedTag);
+
+                updateScoreDisplay();
+
+                if (currentScore === sortData.length) {
+                    document.getElementById('game-complete-banner').classList.remove('hidden');
+                    triggerConfetti();
+                }
+            } else {
+                alert(`❌ Ой, майже! ${item.name} належить до іншої категорії. Спробуй ще раз!`);
+            }
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById('game-score').innerText = `${currentScore} / ${sortData.length}`;
+            const browserCount = document.querySelectorAll('#browser-items span.bg-white\\/20').length;
+            const searchCount = document.querySelectorAll('#search-items span.bg-white\\/20').length;
+            document.getElementById('browser-count').innerText = `${browserCount} розпізнано`;
+            document.getElementById('search-count').innerText = `${searchCount} розпізнано`;
+        }
+
+        function resetSortGame() {
+            initSortGame();
+        }
+
+        /* --- SECTION 3: SIMULATORS LOGIC --- */
+        
+        // Bookmark Sim
+        let isBookmarked = false;
+        function toggleBookmarkSim() {
+            const popup = document.getElementById('bookmark-popup');
+            const icon = document.getElementById('star-icon');
+            const btn = document.getElementById('star-btn');
+            
+            if (!isBookmarked) {
+                popup.classList.remove('hidden');
+                icon.className = 'fa-solid fa-star text-yellow-400';
+                document.getElementById('bm-instruction').innerText = 'Крок 2: Натисни кнопку "Готово" у віконці!';
+            } else {
+                popup.classList.add('hidden');
+                icon.className = 'fa-regular fa-star';
+                document.getElementById('bm-item-1').classList.add('hidden');
+                document.getElementById('bm-instruction').innerText = 'Крок 1: Клацни зірочку ⭐';
+                isBookmarked = false;
+            }
+        }
+
+        function saveBookmarkSim() {
+            document.getElementById('bookmark-popup').classList.add('hidden');
+            document.getElementById('bm-item-1').classList.remove('hidden');
+            document.getElementById('bm-instruction').innerText = '🎉 Вітаємо! Сайт додано на панель закладок!';
+            isBookmarked = true;
+        }
+
+        // Language Sim
+        function nextLangStep(step) {
+            document.getElementById('lang-step-1').classList.add('hidden');
+            document.getElementById('lang-step-2').classList.add('hidden');
+            document.getElementById('lang-step-3').classList.add('hidden');
+
+            document.getElementById(`lang-step-${step}`).classList.remove('hidden');
+            document.getElementById('lang-step-indicator').innerText = `Крок ${step} з 3`;
+        }
+
+        function resetLangStep() {
+            nextLangStep(1);
+        }
+
+        // Downloads Toggle Sim
+        let dlEnabled = false;
+        function toggleDownloadSetting() {
+            dlEnabled = !dlEnabled;
+            const btn = document.getElementById('dl-toggle-btn');
+            const circle = document.getElementById('dl-toggle-circle');
+            const status = document.getElementById('dl-status-box');
+
+            if (dlEnabled) {
+                btn.className = 'w-12 h-6 bg-emerald-500 rounded-full p-1 transition-colors duration-200 ease-in-out focus:outline-none';
+                circle.className = 'w-4 h-4 bg-white rounded-full shadow-md transform translate-x-6 transition-transform duration-200 ease-in-out';
+                status.className = 'text-xs p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-bold';
+                status.innerHTML = '✅ Чудово! Тепер при завантаженні картинок чи книг браузер питатиме: "Куди зберегти файл?"';
+            } else {
+                btn.className = 'w-12 h-6 bg-slate-300 rounded-full p-1 transition-colors duration-200 ease-in-out focus:outline-none';
+                circle.className = 'w-4 h-4 bg-white rounded-full shadow-md transform transition-transform duration-200 ease-in-out';
+                status.className = 'text-xs p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 font-medium';
+                status.innerHTML = '⚠️ Зараз усі файли автоматично потрапляють у завалена папку "Downloads" без запиту.';
+            }
+        }
+
+        /* --- SECTION 4: QUIZ LOGIC --- */
+        const quizAnswers = { q1: false, q2: false, q3: false, q4: false };
+
+        function checkAnswer(btn, isCorrect, qId) {
+            const parent = btn.parentElement;
+            const buttons = parent.querySelectorAll('button');
+            buttons.forEach(b => {
+                b.classList.remove('bg-emerald-100', 'border-emerald-500', 'bg-red-100', 'border-red-500');
+            });
+
+            if (isCorrect) {
+                btn.classList.add('bg-emerald-100', 'border-emerald-500');
+                quizAnswers[qId] = true;
+            } else {
+                btn.classList.add('bg-red-100', 'border-red-500');
+                quizAnswers[qId] = false;
+            }
+        }
+
+        function finishQuiz() {
+            const totalCorrect = Object.values(quizAnswers).filter(Boolean).length;
+            document.getElementById('quiz-container').classList.add('hidden');
+            const resultBox = document.getElementById('quiz-result');
+            resultBox.classList.remove('hidden');
+
+            document.getElementById('quiz-score-text').innerText = `Ти правильно відповів(ла) на ${totalCorrect} з 4 питань!`;
+            triggerConfetti();
+        }
+
+        /* Simple Canvas Confetti Effect */
+        function triggerConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EC4899'];
+
+            for (let i = 0; i < 80; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedY: Math.random() * 3 + 2,
+                    speedX: Math.random() * 2 - 1
+                });
+            }
+
+            let animationFrame;
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                if (particles.some(p => p.y < canvas.height)) {
+                    animationFrame = requestAnimationFrame(render);
+                }
+            }
+            render();
+        }
+
+        // Initialize sorting game on window load
+        window.onload = function() {
+            initSortGame();
+        };
+    </script>
+</body>
+</html>
